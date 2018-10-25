@@ -1,16 +1,27 @@
-node('master') {
+pipeline {
+    agent any
+    stages {
         stage('Build') {
-		checkout scm
-                   bat 'mvn -B -DskipTests clean package'
-
+            steps {
+                bat 'mvn -B -DskipTests clean package'
+            }
         }
         stage('Test') {
-        
+            steps {
                 bat 'mvn test'
-		junit 'target/surefire-reports/*.xml'
- 
+            }
+            post {
+                always {
+                    junit 'target/surefire-reports/*.xml'
+		    notifyemail()
+                }
+            }
         }
-        stage('Send email') {
+      }
+}
+
+
+notifyemail(){
           def mailRecipients = "external.Prajwal.Gowda@de.bosch.com"
           def jobName = currentBuild.fullDisplayName
           emailext body: '''${SCRIPT, template="groovy-html.template"}''',
@@ -21,5 +32,5 @@ node('master') {
                    recipientProviders: [[$class: 'CulpritsRecipientProvider']]
 		
       }
-}
+
 
