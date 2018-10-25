@@ -1,14 +1,14 @@
 node('master') {
         stage('Build') {
-            steps {
-                bat 'mvn -B -DskipTests clean package'
-            }
+		checkout scm
+                   bat 'mvn -B -DskipTests clean package'
+
         }
         stage('Test') {
-            steps {
+        
                 bat 'mvn test'
 		junit 'target/surefire-reports/*.xml'
-            }
+ 
         }
         stage('Send email') {
           def mailRecipients = "external.Prajwal.Gowda@de.bosch.com"
