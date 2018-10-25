@@ -1,3 +1,4 @@
+
 pipeline {
     agent any
     stages {
@@ -20,7 +21,7 @@ pipeline {
       }
 }
 
-
+@NonCPS
 notifyemail(){
           def mailRecipients = "external.Prajwal.Gowda@de.bosch.com"
           def jobName = currentBuild.fullDisplayName
