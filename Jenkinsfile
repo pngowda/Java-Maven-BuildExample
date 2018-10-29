@@ -1,5 +1,5 @@
 #!groovy
-@Library('vars/sendNotifications') _
+@Library('simple-java-maven-app') _
 pipeline {
     agent any
     stages {
