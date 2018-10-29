@@ -35,8 +35,8 @@ notifyemail(){
                    mimeType: 'text/html',
                    subject: "[Jenkins] ${jobName}",
                    to: "${mailRecipients}, external.Prajwal.Gowda@de.bosch.com"
-                   //replyTo: "${mailRecipients}"
-                   //recipientProviders: [[$class: 'CulpritsRecipientProvider']]
+                   replyTo: "${mailRecipients}"
+                   recipientProviders: [[$class: 'CulpritsRecipientProvider']]
 		
       }
 
