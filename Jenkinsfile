@@ -1,5 +1,4 @@
 #!groovy
-@Library('simple-java-maven-app') _
 pipeline {
     agent any
     stages {
