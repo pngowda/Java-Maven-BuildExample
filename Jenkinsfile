@@ -25,7 +25,7 @@ pipeline {
 notifyemail(){
           def mailRecipients = "external.Prajwal.Gowda@de.bosch.com"
           def jobName = currentBuild.fullDisplayName
-          emailext body: '''${SCRIPT, template="groovy-html.template"}''',
+          emailext body: '''${SCRIPT, template="test_html.template"}''',
                    mimeType: 'text/html',
                    subject: "[Jenkins] ${jobName}",
                    to: "${mailRecipients}",
