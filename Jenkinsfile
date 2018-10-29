@@ -28,7 +28,7 @@ notifyemail(){
 	 def mailRecipients = emailextrecipients([[$class: 'CulpritsRecipientProvider'],
                                  [$class: 'DevelopersRecipientProvider'],
                                  [$class: 'RequesterRecipientProvider']])
-	
+	println "${mailRecipients}"
           //def mailRecipients = "external.Prajwal.Gowda@de.bosch.com"
           def jobName = currentBuild.fullDisplayName
           emailext body: '''${SCRIPT, template="test_html.template"}''',
