@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<head>
+  <title>Build report</title>
+  <style type="text/css">
+body {
+	font-family:Arial, Helvetica, sans-serif;
+}
+h1 {
+	font-weight: bold;
+	color: #4256a2;
+}  	
+h2 {
+	font-size: 14px;
+	color: #666;
+}
+table a:link {
+	color: #4256a2;
+	font-weight: bold;
+	text-decoration:none;
+}
+table a:visited {
+	color: #4256a2;
+	font-weight:bold;
+	text-decoration:none;
+}
+table a:active,
+table a:hover {
+	color: #bd5a35;
+	text-decoration:underline;
+}
+table {
+	font-family:Arial, Helvetica, sans-serif;
+	color:#666;
+	font-size:12px;
+	text-shadow: 1px 1px 0px #fff;
+	background:#eaebec;
+	margin:20px;
+	border:#ccc 1px solid;
+
+	-moz-border-radius:3px;
+	-webkit-border-radius:3px;
+	border-radius:3px;
+
+	-moz-box-shadow: 0 1px 2px #d1d1d1;
+	-webkit-box-shadow: 0 1px 2px #d1d1d1;
+	box-shadow: 0 1px 2px #d1d1d1;
+}
+table th {
+	padding:10px 6px 10px 6px;
+	border-top:1px solid #fafafa;
+	border-bottom:1px solid #e0e0e0;
+
+	background: #ededed;
+	background: -webkit-gradient(linear, left top, left bottom, from(#ededed), to(#ebebeb));
+	background: -moz-linear-gradient(top,  #ededed,  #ebebeb);
+}
+table th:first-child {
+	text-align: left;
+	padding-left:20px;
+}
+table tr:first-child th:first-child {
+	-moz-border-radius-topleft:3px;
+	-webkit-border-top-left-radius:3px;
+	border-top-left-radius:3px;
+}
+table tr:first-child th:last-child {
+	-moz-border-radius-topright:3px;
+	-webkit-border-top-right-radius:3px;
+	border-top-right-radius:3px;
+}
+table tr {
+	text-align: center;
+	padding-left:10px;
+}
+table td:first-child {
+	text-align: left;
+	padding-left:20px;
+	border-left: 0;
+}
+table td {
+	padding:5px;
+	border-top: 1px solid #ffffff;
+	border-bottom:1px solid #e0e0e0;
+	border-left: 1px solid #e0e0e0;
+
+	background: #fafafa;
+	background: -webkit-gradient(linear, left top, left bottom, from(#fbfbfb), to(#fafafa));
+	background: -moz-linear-gradient(top,  #fbfbfb,  #fafafa);
+}
+table tr.even td {
+	background: #faaaaa;
+	background: -webkit-gradient(linear, left top, left bottom, from(#f8f8f8), to(#f6f6f6));
+	background: -moz-linear-gradient(top,  #f8f8f8,  #f6f6f6);
+}
+table tr:last-child td {
+	border-bottom:0;
+}
+table tr:last-child td:first-child {
+	-moz-border-radius-bottomleft:3px;
+	-webkit-border-bottom-left-radius:3px;
+	border-bottom-left-radius:3px;
+}
+table tr:last-child td:last-child {
+	-moz-border-radius-bottomright:3px;
+	-webkit-border-bottom-right-radius:3px;
+	border-bottom-right-radius:3px;
+}
+table tr:hover td {
+	background: #f2f2f2;
+	background: -webkit-gradient(linear, left top, left bottom, from(#f2f2f2), to(#f0f0f0));
+	background: -moz-linear-gradient(top,  #f2f2f2,  #f0f0f0);	
+}
+table td.bold {
+	font-weight: bold;
+}
+table td.jobname {
+	font-size: 14px;
+	font-weight: bold;
+	
+}
+table td.buildnumber {
+	font-size: 20px;
+	font-weight: bold;
+	
+}
+li span.newFailing {
+	color: #ff3131;
+	font-weight: bold;
+}
+table tr.divider td {
+	border-top: 5px solid #e0e0e0;
+}
+.warning {
+	color: #ff3131;
+	font-weight: bold;
+}
+  </style>
+</head>
+
+<% 
+
+
+
+def getFailingSinceBuild(def jobRun) {
+	if(jobRun.getResult() == Result.SUCCESS) {
+		return null
+	}
+
+	def previousRun = jobRun.getPreviousBuild()
+	if(previousRun != null && previousRun.getResult() != Result.SUCCESS) {
+		return getFailingSinceBuild(previousRun)
+	}
+	return previousRun
+}
+
+def collectChangeSetsSinceFailing(def jobRun, def changeSets) {
+	if(jobRun.getResult() == Result.SUCCESS) {
+		return changeSets
+	} else if(changeSets == null) {
+		changeSets = jobRun.getChangeSets().collect() //collect results and don't duplicate them!!!
+	}
+
+	def previousRun = jobRun.getPreviousBuild()
+	if(previousRun != null && previousRun.getResult() != Result.SUCCESS) {
+		if(previousRun.getChangeSets() != null && previousRun.getChangeSets().any()) {
+			changeSets.addAll(previousRun.getChangeSets())
+		}
+	
+		return collectChangeSetsSinceFailing(previousRun, changeSets)
+	}
+	return changeSets
+}
+
+static def daysBetween(def startDate, def endDate) {
+	use(groovy.time.TimeCategory) {
+		def duration = endDate - startDate
+		return duration.days
+	}
+}
+
+
+def matchedJobs = Jenkins.instance.items.findAll { job ->
+		job.name =~ '.*Snapshot.*'
+}
+
+
+class JobContainer {
+	def job
+	def lastRun
+	def lastRunTestResult
+	def previousRun
+	def previousRunTestResult
+	def failingSinceRun
+	def changeSetsSinceFailing
+}
+
+def jobContainerList = [] as ArrayList
+	
+matchedJobs.each { job ->
+	def lastRun = job.getLastBuild() != null && job.getLastBuild().getResult() == null ? job.getLastBuild().getPreviousBuild() : job.getLastBuild()
+	if(job.getClass().getName().equals("org.jenkinsci.plugins.workflow.job.WorkflowJob") && lastRun != null && lastRun.getResult() != Result.SUCCESS) {
+		JobContainer jobContainer = new JobContainer()
+		def previousRun = lastRun.getPreviousBuild()
+		def failingSinceRun = getFailingSinceBuild(lastRun)
+		def lastRunTestResult = lastRun.getAction(hudson.tasks.junit.TestResultAction.class)
+		def previousRunTestResult = previousRun != null ? previousRun.getAction(hudson.tasks.junit.TestResultAction.class) : null
+		def changeSetsSinceFailing = collectChangeSetsSinceFailing(lastRun, null)
+		jobContainer.job = job
+		jobContainer.lastRun = lastRun
+		jobContainer.previousRun = previousRun
+		jobContainer.failingSinceRun = failingSinceRun
+		jobContainer.changeSetsSinceFailing = changeSetsSinceFailing
+		jobContainer.lastRunTestResult = lastRunTestResult
+		jobContainer.previousRunTestResult = previousRunTestResult
+		jobContainerList.add(jobContainer)
+		
+	}
+}
+
+%>	
+
+<body>
+	<h1>SharCC Build Summary - Failures!</h1>
+	<h2>Please see summary of build failures and fix as soon as possible! Thank you!</h2>
+	<table cellspacing="0">
+		<tr>
+			<th>Job Name</th>
+			<th>Job Status</th>
+			<th>Build Number</th>
+			<th>Failing Since Build (Days)</th>
+			<th>Number of Test Cases</th>
+			<th>Failed Test Cases</th>
+			<th>New Failed Test Cases</th>
+		</tr>
+		<% def count = 0 %>
+		<%jobContainerList.each { jobContainer ->
+			def failingSince = jobContainer.failingSinceRun != null ? daysBetween(jobContainer.failingSinceRun.getTimestamp(), jobContainer.lastRun.getTimestamp()) : 0
+			count++ %>
+			<tr>
+				<td class="jobname" align="left"><a href="<%=jobContainer.job.getAbsoluteUrl()%>"><%=jobContainer.job.getName()%></a></td>
+				<td class="bold"><%=jobContainer.lastRun.getResult()%></td>
+				<td class="buildnumber"><a href="<%=jobContainer.lastRun.getAbsoluteUrl()%>"><%=jobContainer.lastRun.getNumber()%></a></td>
+				<td><%=jobContainer.failingSinceRun != null ? ("<a href=\"" + jobContainer.failingSinceRun.getAbsoluteUrl() + "\"/>" + jobContainer.failingSinceRun.getNumber() + "</a> (" + daysBetween(jobContainer.failingSinceRun.getTimestamp(), jobContainer.lastRun.getTimestamp()) + ")") : "-"%></td>
+				<td><%=jobContainer.lastRunTestResult != null ? jobContainer.lastRunTestResult.getTotalCount() : "-"%></td>
+				<td><%=jobContainer.lastRunTestResult != null ? jobContainer.lastRunTestResult.getFailCount() : "-"%></td>
+				<td><%=jobContainer.lastRunTestResult != null  && jobContainer.previousRunTestResult != null ? jobContainer.lastRunTestResult.getFailCount() - jobContainer.previousRunTestResult.getFailCount() : jobContainer.lastRunTestResult.getFailCount()%></td>
+			</tr>
+			<tr>
+				<td colspan="1" class="bold" align="left">Potential Issuers</td>
+				<td colspan="6" align="left"><%jobContainer.lastRun.getCulprits().each{user ->%><%=user.getFullName() + " "%><%}%>&nbsp;<span class="warning"><%= failingSince.getDays() > 0 ? "Failing since more than 1 day. Please Fix!":""%></span></td>
+			</tr>
+			<% if(jobContainer.changeSetsSinceFailing != null) {%>
+			<tr>
+				<td colspan="1" class="bold" align="left" valign="top">ChangeSets since failing</td>
+				<td colspan="6" align="left">  
+					<ul>
+						<%jobContainer.changeSetsSinceFailing.each { cs -> cs.getAllChanges().each {cse -> %>
+						<li>Since build <a href="<%=cs.getRun().getAbsoluteUrl() + "/changes"%>"><%=cs.getRun().getNumber()%></a> / <%=cse.getMsg()%> by <b><%= cse.getAuthor() %>:</b> / ChangeSet Item Id <b><%= cse.getChangeSetItemId() %></b></li>
+						<%}}%>
+					</ul>
+				</td>
+			</tr>
+			<%}%>
+			<% if(jobContainer.lastRunTestResult.getFailedTests() != null) {%>
+			<tr>
+				<td colspan="1" class="bold" align="left">Failing test cases</br><a href="<%=jobContainer.job.getAbsoluteUrl() + "/test_results_analyzer/"%>">Test Results</a></td>
+				<td colspan="6" align="left">  
+					<ul>
+						<%jobContainer.lastRunTestResult.getFailedTests().each { testCase -> %>
+						<li><%= testCase.getFailedSince() == jobContainer.lastRun.getNumber()? "<span class=\"newFailing\">NEW!!!</span>" : ""%> <b><%= testCase.getName() %></b> Failing since build <b><%= testCase.getFailedSince() %></b></li>
+						<%}%>
+					</ul>
+				</td>
+			</tr>
+			<%}%>
+			<% if(count < jobContainerList.size()) {%>
+			<tr class="divider">
+				<td>Job Name</td>
+				<td>Job Status</td>
+				<td>Build Number</td>
+				<td>Failing Since (Days)</td>
+				<td>Number of Test Cases</td>
+				<td>Failed Test Cases</td>
+				<td>New Failed Test Cases</td>
+			</tr>
+			<%}%>
+		<%}%>
+	</table>
+</body>
