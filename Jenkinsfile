@@ -25,14 +25,18 @@ pipeline {
 
 @NonCPS
 notifyemail(){
-          def mailRecipients = "external.Prajwal.Gowda@de.bosch.com"
+	 def mailRecipients = emailextrecipients([[$class: 'CulpritsRecipientProvider'],
+                                 [$class: 'DevelopersRecipientProvider'],
+                                 [$class: 'RequesterRecipientProvider']])
+	
+          //def mailRecipients = "external.Prajwal.Gowda@de.bosch.com"
           def jobName = currentBuild.fullDisplayName
           emailext body: '''${SCRIPT, template="test_html.template"}''',
                    mimeType: 'text/html',
                    subject: "[Jenkins] ${jobName}",
-                   to: "${mailRecipients}",
-                   replyTo: "${mailRecipients}",
-                   recipientProviders: [[$class: 'CulpritsRecipientProvider']]
+                   to: "${mailRecipients}"
+                   //replyTo: "${mailRecipients}"
+                   //recipientProviders: [[$class: 'CulpritsRecipientProvider']]
 		
       }
 
