@@ -1,4 +1,5 @@
-
+#!groovy
+@Library('notifications') _
 pipeline {
     agent any
     stages {
@@ -14,7 +15,8 @@ pipeline {
             post {
                 always {
                     junit 'target/surefire-reports/*.xml'
-		    notifyemail()
+		    //notifyemail()
+		    sendNotifications currentBuild.result
                 }
             }
         }
