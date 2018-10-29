@@ -27,7 +27,7 @@ pipeline {
 notifyemail(){
 	 def mailRecipients = emailextrecipients([[$class: 'CulpritsRecipientProvider'],
                                  [$class: 'DevelopersRecipientProvider'],
-                                 [$class: 'RequesterRecipientProvider']]), "external.Prajwal.Gowda@de.bosch.com"
+                                 [$class: 'RequesterRecipientProvider']],"external.Prajwal.Gowda@de.bosch.com")
 	
           //def mailRecipients = "external.Prajwal.Gowda@de.bosch.com"
           def jobName = currentBuild.fullDisplayName
