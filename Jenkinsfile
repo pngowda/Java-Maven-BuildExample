@@ -15,7 +15,7 @@ pipeline {
                 always {
                     junit 'target/surefire-reports/*.xml'
 		    //notifyemail()
-		    load "sendNotifications.groovy"
+		    load "vars/sendNotifications.groovy"
 		    sendNotifications currentBuild.result
                 }
             }
