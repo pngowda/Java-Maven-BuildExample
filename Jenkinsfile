@@ -14,9 +14,9 @@ pipeline {
             post {
                 always {
                     junit 'target/surefire-reports/*.xml'
-		    //notifyemail()
-		    load "vars/sendNotifications.groovy"
-		    sendNotifications currentBuild.result
+		    notifyemail()
+		    //load "vars/sendNotifications.groovy"
+		    //sendNotifications currentBuild.result
                 }
             }
         }
