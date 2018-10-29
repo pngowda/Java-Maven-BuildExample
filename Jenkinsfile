@@ -1,5 +1,5 @@
 #!groovy
-@Library('notifications') _
+@Library('sendNotifications') _
 pipeline {
     agent any
     stages {
