@@ -27,14 +27,14 @@ pipeline {
 notifyemail(){
 	 def mailRecipients = emailextrecipients([[$class: 'CulpritsRecipientProvider'],
                                  [$class: 'DevelopersRecipientProvider'],
-                                 [$class: 'RequesterRecipientProvider'],"external.Prajwal.Gowda@de.bosch.com"])
+                                 [$class: 'RequesterRecipientProvider']])
 	
           //def mailRecipients = "external.Prajwal.Gowda@de.bosch.com"
           def jobName = currentBuild.fullDisplayName
           emailext body: '''${SCRIPT, template="test_html.template"}''',
                    mimeType: 'text/html',
                    subject: "[Jenkins] ${jobName}",
-                   to: "${mailRecipients}"
+                   to: "${mailRecipients}, external.Prajwal.Gowda@de.bosch.com"
                    //replyTo: "${mailRecipients}"
                    //recipientProviders: [[$class: 'CulpritsRecipientProvider']]
 		
