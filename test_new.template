@@ -81,7 +81,7 @@
       <td><% build.causes.each() { cause -> %> ${cause.shortDescription} <%  } %></td>
     </tr>
     <tr>
-      <td>TRA URL:</td>
+      <td>Test Result Analyzer URL:</td>
       <td><A href="${rooturl}${build.url}">${rooturl}${build.url}</A></td>
     </tr>
   </table>
