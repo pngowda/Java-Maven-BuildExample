@@ -238,9 +238,11 @@
       </td>
     </tr>
         <% }
-  <tr><td>Following tests started passing. Good work!</td></tr>	
-  <tr><td>Following tests started FAILING. Have the last change caused it!!</td></tr>
-  <tr><td>Following tests are conitnuously failing. Someone should look into it!!!</td></tr>
+  <tr>
+  <td>Following tests started passing. Good work!</td>	
+  <td>Following tests started FAILING. Have the last change caused it!!</td>
+  <td>Following tests are conitnuously failing. Someone should look into it!!!</td>
+  </tr>
     }
 } %>
 
