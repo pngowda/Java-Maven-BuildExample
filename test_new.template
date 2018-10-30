@@ -224,6 +224,7 @@
 	      <% packageResult.getPassedTests().findAll({it.getStatus().toString() == "FIXED";}).each{
         test -> %>
             <tr>
+	      <td>Following tests started passing. Good work!</td>
               <td class="test test-fixed" colspan="6">
                 ${test.getFullName()} ${test.getStatus()}
               </td>
@@ -233,6 +234,7 @@
         <% packageResult.getFailedTests().sort({a,b -> a.getAge() <=> b.getAge()}).each{
           failed_test -> %>
     <tr>
+      <td>Following tests started FAILING. Have the last change caused it!!</td>
       <td class="test test-failed" colspan="6">
         ${failed_test.getFullName()} (Age: ${failed_test.getAge()})
       </td>
@@ -243,10 +245,11 @@
 } %>
 
   
+  <!--
   <tr><td>Following tests started passing. Good work!</td></tr>	
   <tr><td>Following tests started FAILING. Have the last change caused it!!</td></tr>
-  <tr><td>Following tests are conitnuously failing. Someone should look into it!!!</td>
-  </tr>
+  <tr><td>Following tests are conitnuously failing. Someone should look into it!!!</td></tr>
+  -->
 
 
   </table>
