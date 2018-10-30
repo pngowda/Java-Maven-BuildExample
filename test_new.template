@@ -88,47 +88,6 @@ if (artifacts != null && artifacts.size() > 0) { %>
     </ul>
 <% } %>
  
-
- 
-<% if (testResult) { %>
-<h2>Test Results</h2>
-<ul>
-  <li>Total tests ran: <a href="${testResultsUrl}">${testResult.totalCount}</a></li>
-  <%if (testResult.failCount){%>
-    <li>Failure count and delta: ${testResult.failCount} ${testResult.failureDiffString}</li>
-  <%}%>
-  <li>Success rate: ${lastBuildSuccessRate}% </li>
-</ul> 
-<% } %>
- 
-<% if (startedPassing) { %>
-<h3>Following tests started passing. Good work!</h3>
-<ul>
-  <% startedPassing.each { %>
-    <li>${it}</li>
-  <% } %>
-</ul>
-<% } %>
- 
-<% if (startedFailing) { %>
-<h3>Following tests started FAILING. Have the last change caused it!!</h3>
-<ul>
-  <% startedFailing.each { %>
-    <li><a href="${it.url}">${it.displayName}</a></li>
-  <% } %>
-</ul>
-<% } %>
- 
-<% if (failing) { %>
-<h3>Following tests are conitnuously failing. Someone should look into it!!!</h3>
-<ul>
-  <% failing.each { %>
-    <li><a href="${it.url}">${it.displayName}</a> (Failing since ${it.age} runs)</li>
-  <% } %>
-</ul>
-<% } %>
- 
-<% } %>
  
 <!-- BUILD FAILURE REASONS -->
 <% if (build.result == hudson.model.Result.FAILURE) {
