@@ -89,7 +89,17 @@ if (artifacts != null && artifacts.size() > 0) { %>
 <% } %>
  
 <% 
-  testResult = build.testResultAction
+
+  def junitResultList = it.JUnitTestResult
+  try {
+    def testResult = it.getAction("org.jenkinsci.plugins.cucumber.jsontestsupport.CucumberTestResultAction")
+    junitResultList.add( cucumberTestResultAction.getResult() )
+  } catch(e) {
+    //testResult not exist in this build
+  }
+  
+  
+  //testResult = build.testResultAction
  
   if (testResult) {
     jobName = build.parent.name
