@@ -220,37 +220,32 @@
       <td>${packageResult.getFailedSince()}</td>
       <td>${packageResult.getPassCount() + packageResult.getFailCount() + packageResult.getSkipCount()}</td>
     </tr>
-
-	      <% packageResult.getPassedTests().findAll({it.getStatus().toString() == "FIXED";}).each{
+    }
+} %>
+   <tr><h5>Following tests started passing. Good work!</h5></tr>
+    <% junitResultList.each {
+      junitResult -> junitResult.getChildren().each {
+      <% packageResult.getPassedTests().findAll({it.getStatus().toString() == "FIXED";}).each{
         test -> %>
             <tr>
-	      <tr><h5>Following tests started passing. Good work!</h5></tr>
+	      
               <td class="test test-fixed" colspan="6">
                 ${test.getFullName()} ${test.getStatus()}
               </td>
             </tr>
-        <% } %>
-		
-        <% packageResult.getFailedTests().sort({a,b -> a.getAge() <=> b.getAge()}).each{
+       <% } %>
+      <tr><h5>Following tests started FAILING. Have the last change caused it!!</h5></tr>		
+       <% packageResult.getFailedTests().sort({a,b -> a.getAge() <=> b.getAge()}).each{
           failed_test -> %>
-    <tr>
-      <tr><h5>Following tests started FAILING. Have the last change caused it!!</h5></tr>
-      <td class="test test-failed" colspan="6">
-        ${failed_test.getFullName()} (Age: ${failed_test.getAge()})
-      </td>
-    </tr>
-        <% }
-
+          <tr>
+           
+            <td class="test test-failed" colspan="6">
+              ${failed_test.getFullName()} (Age: ${failed_test.getAge()})
+            </td>
+          </tr>
+       <% }
     }
 } %>
-
-  
-  <!--
-  <tr><td>Following tests started passing. Good work!</td></tr>	
-  <tr><td>Following tests started FAILING. Have the last change caused it!!</td></tr>
-  <tr><td>Following tests are conitnuously failing. Someone should look into it!!!</td></tr>
-  -->
-
 
   </table>
   <br/>
