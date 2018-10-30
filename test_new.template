@@ -75,18 +75,7 @@
   <tr><th>Build duration:</th><td>${build.durationString}</td></tr>
 </table>
  
-<!-- CHANGE SET -->
-<% changeSets = build.changeSets
-if (changeSets != null) {
-  hadChanges = false %>
-  <h2>Changes</h2>
-  <ul>
 
-  if (!hadChanges) { %>	
-      <li>No Changes</li>
-<%  } %>
-  </ul>
-<% } %>
  
 <!-- ARTIFACTS -->
 <% artifacts = build.artifacts
