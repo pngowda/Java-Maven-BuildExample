@@ -239,10 +239,14 @@
       }
     } %>
   </table>
+  <h3>Following tests started passing. Good work!</h3>
+  <h3>Following tests started FAILING. Have the last change caused it!!</h3>
+  <h3>Following tests are conitnuously failing. Someone should look into it!!!</h3>
   <br/>
   <% } %>
 
-<!-- CONSOLE OUTPUT -->
+
+ <!-- CONSOLE OUTPUT -->
   <%
   if ( build.result == hudson.model.Result.FAILURE ) { %>
   <table class="section" cellpadding="0" cellspacing="0">
