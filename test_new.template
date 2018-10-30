@@ -230,7 +230,7 @@
     </tr>
         <% }
       }
-    } %>
+ 
 
   <tr><td>Following tests started passing. Good work!</td>
       <% packageResult.getPassedTests().findAll({it.getStatus().toString() == "FIXED";}).each{
@@ -244,6 +244,7 @@
   </tr>	
   <tr><td>Following tests started FAILING. Have the last change caused it!!</td></tr>
   <tr><td>Following tests are conitnuously failing. Someone should look into it!!!</td></tr>
+  } %>
   </table>
   <br/>
   <% } %>
