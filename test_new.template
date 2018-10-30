@@ -88,64 +88,7 @@ if (artifacts != null && artifacts.size() > 0) { %>
     </ul>
 <% } %>
  
-<% 
 
-  def junitResultList = it.JUnitTestResult
-  try {
-    def testResult = it.getAction("org.jenkinsci.plugins.cucumber.jsontestsupport.CucumberTestResultAction")
-    junitResultList.add( cucumberTestResultAction.getResult() )
-  } catch(e) {
-    //testResult not exist in this build
-  }
-  
-  
-  //testResult = build.testResultAction
- 
-  if (testResult) {
-    jobName = build.parent.name
-    rootUrl = hudson.model.Hudson.instance.rootUrl
-    testResultsUrl = "${rootUrl}${build.url}testReport/"
- 
-    if (testResult.failCount){
-      lastBuildSuccessRate = String.format("%.2f", (testResult.totalCount - testResult.failCount) * 100f / testResult.totalCount)
-    }
-    else{
-      lastBuildSuccessRate = 100f;
-    }
-    
-    startedPassing = []
-    startedFailing = []
-    failing = []
- 
-    previousFailedTestCases = new HashSet()
-    currentFailedTestCase = new HashSet()
- 
-    if (build.previousBuild?.testResultAction) {
-      build.previousBuild.testResultAction.failedTests.each {
-        previousFailedTestCases << it.simpleName + "." + it.safeName
-      }
-    }
- 
-    testResult.failedTests.each { tr ->
-        packageName = tr.packageName
-        className = tr.simpleName
-        testName = tr.safeName
-        displayName = className + "." + testName
-        
-        currentFailedTestCase << displayName
-        url = "${rootUrl}${build.url}testReport/$packageName/$className/$testName"
-        if (tr.age == 1) {
-          startedFailing << [displayName: displayName, url: url, age: 1]
-        } else {
-          failing << [displayName: displayName, url: url, age: tr.age]
-        }
-    }
- 
-    startedPassing = previousFailedTestCases - currentFailedTestCase
-    startedFailing = startedFailing.sort {it.displayName}
-    failing = failing.sort {it.displayName}
-    startedPassing = startedPassing.sort()
-%>
  
 <% if (testResult) { %>
 <h2>Test Results</h2>
