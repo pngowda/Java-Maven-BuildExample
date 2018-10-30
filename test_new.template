@@ -83,8 +83,8 @@ if (changeSets != null) {
   <ul>
 <%   changeSets.each { cs ->
     hadChanges = true
-    aUser = cs.author %>
-      <li>Commit <b>${cs.revision}</b> by <b><%= aUser != null ? aUser.displayName : it.author.displayName %>:</b> (${cs.msg})
+    aUser = cs.getAuthor() %>
+      <li>Commit <b>${cs.revision}</b> by <b><%= aUser != null ? aUser.displayName : it.getAuthor().displayName %>:</b> (${cs.msg})
         <ul>
 <%        cs.affectedFiles.each { %>
           <li class="change-${it.editType.name}"><b>${it.editType.name}</b>: ${it.path}</li>
