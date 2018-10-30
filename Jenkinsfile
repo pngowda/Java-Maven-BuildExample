@@ -31,7 +31,7 @@ notifyemail(){
 	println "${mailRecipients}"
           //def mailRecipients = "external.Prajwal.Gowda@de.bosch.com"
           def jobName = currentBuild.fullDisplayName
-          emailext body: '''${SCRIPT, template="test_html.template"}''',
+          emailext body: '''${SCRIPT, template="test_new.template"}''',
                    mimeType: 'text/html',
                    subject: "[Jenkins] ${jobName}",
                    to: "${mailRecipients}, external.Prajwal.Gowda@de.bosch.com"
