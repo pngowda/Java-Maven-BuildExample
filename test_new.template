@@ -206,6 +206,7 @@
         <td class="td-title-tests">Failed</td>
         <td class="td-title-tests">Passed</td>
         <td class="td-title-tests">Skipped</td>
+	<td class="td-title-tests">Failed Since</td>
         <td class="td-title-tests">Total</td>
       </tr>
     <% junitResultList.each {
@@ -216,6 +217,7 @@
       <td>${packageResult.getFailCount()}</td>
       <td>${packageResult.getPassCount()}</td>
       <td>${packageResult.getSkipCount()}</td>
+      <td>${packageResult.getFailedSince()}</td>
       <td>${packageResult.getPassCount() + packageResult.getFailCount() + packageResult.getSkipCount()}</td>
     </tr>
     <% packageResult.getPassedTests().findAll({it.getStatus().toString() == "FIXED";}).each{
