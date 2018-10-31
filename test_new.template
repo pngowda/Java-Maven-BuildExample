@@ -229,7 +229,7 @@
                 ${test.getFullName()} ${test.getStatus()}
               </td>
             </tr>
-        <% }
+        <% } %>
 		
         <% packageResult.getFailedTests().sort({a,b -> a.getAge() <=> b.getAge()}).each{
           failed_test -> %>
