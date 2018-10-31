@@ -223,27 +223,7 @@
     }
 } %>
    
-    <% junitResultList.each {
-      junitResult -> junitResult.getChildren().each {
-      <tr><h5>Following tests started passing. Good work!</h5></tr>
-      <% packageResult.getPassedTests().findAll({it.getStatus().toString() == "FIXED";}).each{
-        test -> %>
-            <tr>
-	      
-              <td class="test test-fixed" colspan="6">
-                ${test.getFullName()} ${test.getStatus()}
-              </td>
-            </tr>
-       <% } %>
-      <tr><h5>Following tests started FAILING. Have the last change caused it!!</h5></tr>		
-       <% packageResult.getFailedTests().sort({a,b -> a.getAge() <=> b.getAge()}).each{
-          failed_test -> %>
-          <tr>
-            <td class="test test-failed" colspan="6">
-              ${failed_test.getFullName()} (Age: ${failed_test.getAge()})
-            </td>
-          </tr>
-       <% }%>
+
     }
 } %>
 
