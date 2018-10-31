@@ -221,10 +221,11 @@
       <td>${packageResult.getPassCount() + packageResult.getFailCount() + packageResult.getSkipCount()}</td>
     </tr>
 
+           <tr><h5>Following tests started passing. Good work!</h5></tr>
 	      <% packageResult.getPassedTests().findAll({it.getStatus().toString() == "FIXED";}).each{
         test -> %>
             <tr>
-	      <tr><h5>Following tests started passing. Good work!</h5></tr>
+	      
               <td class="test test-fixed" colspan="6">
                 ${test.getFullName()} ${test.getStatus()}
               </td>
