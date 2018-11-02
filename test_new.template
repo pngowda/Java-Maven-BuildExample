@@ -248,10 +248,16 @@
         } else {%>
 	continuosFail.add(failed_test.getFullName())
 	<% } %>
-	
+	<% } %>
+	<% } %>
+
+	<% if(continuosFail.size()) {%>
+	<tr><h5>Following tests are continuosly FAILING. Someone must look into it!!</h5></tr>
+        <% continuosFail.each{
+          ${it.displayName} %>
 	<% } %>
 	<% }
-
+	
     }
 } %>
 
