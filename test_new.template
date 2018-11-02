@@ -252,10 +252,14 @@
 	<% } %>
 	<% } %>
 
+	<tr>
 	<% if(continuosFail.size()) {%>
 	<tr><h5>Following tests are continuosly FAILING. Someone must look into it!!</h5></tr>
         <% continuosFail.each{
+	<td class="test test-failed" colspan="6">
           ${it.displayName} %>
+	  </td>
+	</tr>
 	<% } %>
 	<% }
 	
