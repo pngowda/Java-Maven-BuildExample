@@ -239,12 +239,14 @@
         <% packageResult.getFailedTests().sort({a,b -> a.getAge() <=> b.getAge()}).each{
           failed_test -> %>
     <tr>
-      
+      <% if(${failed_test.getAge()}==1) {%>
       <td class="test test-failed" colspan="6">
         ${failed_test.getFullName()} (Age: ${failed_test.getAge()})
       </td>
     </tr>
         <% } %>
+	
+	<% } %>
 	<% }
 
     }
