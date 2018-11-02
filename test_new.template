@@ -233,6 +233,8 @@
             </tr>
         <% } %>
 	<% } %>	
+	
+	<% if(packageResult.getFailedTests().sort({a,b -> a.getAge() <=> b.getAge()})) {%>
 	<tr><h5>Following tests started FAILING. Have the last change caused it!!</h5></tr>
         <% packageResult.getFailedTests().sort({a,b -> a.getAge() <=> b.getAge()}).each{
           failed_test -> %>
@@ -243,6 +245,7 @@
       </td>
     </tr>
         <% }
+	<% } %>	
 
     }
 } %>
