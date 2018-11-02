@@ -246,7 +246,8 @@
       </td>
     </tr>
         } else {%>
-	continuosFail.add(failed_test.getFullName())
+	failed_test.getFullName()
+	continuosFail.add(failed_test)
 	<% } %>
 	<% } %>
 	<% } %>
