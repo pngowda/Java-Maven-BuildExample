@@ -244,15 +244,18 @@
       <td class="test test-failed" colspan="6">
         ${failed_test.getFullName()} (Age: ${failed_test.getAge()})
       </td>
-    </tr>
+   
         } else {%>
+	<td class="test test-failed" colspan="6">
 	failed_test.getFullName()
 	continuosFail.add(failed_test)
+	</td>
+	 </tr>
 	<% } %>
 	<% } %>
-	<% } %>
+	<% } 
 
-	<tr>
+	<!--<tr>
 	<% if(continuosFail.size()) {%>
 	<tr><h5>Following tests are continuosly FAILING. Someone must look into it!!</h5></tr>
         <% continuosFail.each{
@@ -261,7 +264,7 @@
 	  </td>
 	</tr>
 	<% } %>
-	<% }
+	<% }-->
 	
     }
 } %>
