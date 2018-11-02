@@ -190,7 +190,7 @@
 
   <%
   def junitResultList = it.JUnitTestResult
-  def continuosFail
+  continuosFail=[]
   try {
     def cucumberTestResultAction = it.getAction("org.jenkinsci.plugins.cucumber.jsontestsupport.CucumberTestResultAction")
     junitResultList.add( cucumberTestResultAction.getResult() )
@@ -245,8 +245,7 @@
         ${failed_test.getFullName()} (Age: ${failed_test.getAge()})
       </td>
     </tr>
-        <% } %>
-	<% else {%>
+        } else {%>
 	continuosFail.add(failed_test.getFullName())
 	<% } %>
 	
