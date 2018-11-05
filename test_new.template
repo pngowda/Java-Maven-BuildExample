@@ -244,6 +244,7 @@
       <td class="test test-failed" colspan="6">
         ${failed_test.getFullName()} (Age: ${failed_test.getAge()})
       </td>
+       <% } %>
    </tr>
         <% } %>
 	<% } 
