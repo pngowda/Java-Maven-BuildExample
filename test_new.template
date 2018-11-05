@@ -190,7 +190,6 @@
 
   <%
   def junitResultList = it.JUnitTestResult
-  continuosFail=[]
   try {
     def cucumberTestResultAction = it.getAction("org.jenkinsci.plugins.cucumber.jsontestsupport.CucumberTestResultAction")
     junitResultList.add( cucumberTestResultAction.getResult() )
@@ -240,25 +239,14 @@
         <% packageResult.getFailedTests().sort({a,b -> a.getAge() <=> b.getAge()}).each{
           failed_test -> %>
     <tr>
+      
       <td class="test test-failed" colspan="6">
         ${failed_test.getFullName()} (Age: ${failed_test.getAge()})
       </td>
-   </tr>
+    </tr>
         <% } %>
-	<% } 
-
-
-<!--
-	<% if(continuosFail.size()) {%>
-	<tr><h5>Following tests are continuosly FAILING. Someone must look into it!!</h5></tr>
-        <% continuosFail.each{
-	<td class="test test-failed" colspan="6">
-          ${it.displayName} %>
-	  </td>
-	</tr>
-	<% } %>
 	<% }
-	-->
+
     }
 } %>
 
