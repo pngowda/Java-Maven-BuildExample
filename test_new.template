@@ -253,7 +253,7 @@
 	 </tr>
 	<% } %>
 	<% } %>
-	<% } 
+	
 
 
 	<% if(continuosFail.size()) {%>
