@@ -2,6 +2,11 @@
 pipeline {
     agent any
     stages {
+	stage('Build') {
+            steps {
+                checkout scm
+            }
+        }
         stage('Build') {
             steps {
                 bat 'mvn -B -DskipTests  clean package'
