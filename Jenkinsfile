@@ -14,6 +14,7 @@ pipeline {
             post {
                 always {
                     junit 'target/surefire-reports/*.xml'
+		    currentBuild.result = 'UNSTABLE'
 		    notifyemail()
 		    //load "vars/sendNotifications.groovy"
 		    //sendNotifications currentBuild.result
