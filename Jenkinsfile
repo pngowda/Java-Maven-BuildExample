@@ -4,17 +4,18 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                bat 'mvn -B -DskipTests -Dmaven.test.failure.ignore=true clean package'
+                bat 'mvn -B -DskipTests  clean package'
             }
         }
         stage('Test') {
             steps {
-                bat 'mvn test'
+                bat 'mvn -Dmaven.test.failure.ignore=true test'
+		currentBuild.result = 'UNSTABLE'
             }
             post {
                 always {
                     junit 'target/surefire-reports/*.xml'
-		    currentBuild.result = 'UNSTABLE'
+		    
 		    notifyemail()
 		    //load "vars/sendNotifications.groovy"
 		    //sendNotifications currentBuild.result
