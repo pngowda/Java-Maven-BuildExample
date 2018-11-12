@@ -62,7 +62,7 @@
     </tr>
     <tr>
       <td>Build URL:</td>
-      <td><A href="${rooturl}${build.parent.url}test_results_analyzer">${rooturl}${build.parent.url}test_results_analyzer</A></td>
+      <td><A href="${rooturl}${build.url}">${rooturl}${build.url}</A></td>
     </tr>
     <tr>
       <td>Build Project:</td>
@@ -82,7 +82,7 @@
     </tr>
     <tr>
       <td>Test Result Analyzer URL:</td>
-      <td><A href=todo</A></td>
+      <td><A href="${rooturl}${build.parent.url}test_results_analyzer">${rooturl}${build.parent.url}test_results_analyzer</A></td>
     </tr>
   </table>
   <br/>
