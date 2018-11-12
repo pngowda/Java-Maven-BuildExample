@@ -62,7 +62,7 @@
     </tr>
     <tr>
       <td>Build URL:</td>
-      <td><A href="${rooturl}${build.parent.url}">${rooturl}${build.parent.url}</A></td>
+      <td><A href="${rooturl}${build.parent.url}">${rooturl}${build.parent.url}/test_results_analyzer</A></td>
     </tr>
     <tr>
       <td>Build Project:</td>
