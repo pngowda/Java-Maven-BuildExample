@@ -1,6 +1,6 @@
 <STYLE>
   BODY, TABLE, TD, TH, P {
-    font-family: Calibri, Verdana, Helvetica, sans serif;
+    font-family: "Times New Roman", Times, serif;
     font-size: 12px;
     color: black;
   }
