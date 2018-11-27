@@ -1,7 +1,7 @@
 <STYLE>
   BODY, TABLE, TD, TH, P {
-    font-family: "Times New Roman", Times, serif;
-    font-size: 13px;
+    font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+    font-size: 12px;
     color: black;
   }
   .console {
