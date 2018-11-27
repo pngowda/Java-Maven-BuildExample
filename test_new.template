@@ -17,13 +17,13 @@
   }
   .td-title-main {
     color: white;
-    font-size: 200%;
+    font-size: 180%;
     padding-left: 5px;
     font-weight: bold;
   }
   .td-title {
     color: white;
-    font-size: 120%;
+    font-size: 110%;
     font-weight: bold;
     padding-left: 5px;
     text-transform: uppercase;
