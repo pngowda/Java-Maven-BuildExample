@@ -1,7 +1,7 @@
 <STYLE>
   BODY, TABLE, TD, TH, P {
     font-family: "Times New Roman", Times, serif;
-    font-size: 12px;
+    font-size: 13px;
     color: black;
   }
   .console {
