@@ -87,7 +87,7 @@
   </table>
   <br/>
 
-  <!-- CHANGE SET -->
+   <!-- CHANGE SET -->
   <%
   def changeSets = build.changeSets
   if(changeSets != null) {
@@ -123,7 +123,7 @@
     <% } %>
   </table>
   <br/>
-  <% } %>
+<% } %>
 
 <!-- ARTIFACTS -->
   <% 
