@@ -245,7 +245,10 @@
       </td>
     </tr>
     <% if ( ${failed_test.getAge()} != "1" ) { %>
-           <tr><h5>NOTE: The above test is contiouslz failing!!</h5></tr>
+          <td class="test test-failed" colspan="6">
+           NOTE: The above test is contiously failing!!
+         </td>
+           //<tr><h5>NOTE: The above test is contiously failing!!</h5></tr>
   <% } %>
         <% } %>
 	<% }
