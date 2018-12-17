@@ -14,7 +14,7 @@ pipeline {
         }
         stage('Test') {
             steps {
-                bat 'mvn -Dmaven.test.failure.ignore=true test'
+                bat 'mvn -Dmaven.test.failure.ignore=false test'
 		//currentBuild.result = 'UNSTABLE'
             }
             post {
