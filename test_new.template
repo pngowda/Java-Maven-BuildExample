@@ -244,7 +244,7 @@
         ${failed_test.getFullName()} (Age: ${failed_test.getAge()})
       </td>
     </tr>
-    <% if ( failed_test.getAge().toInteger > 1 ) { %>
+    <% if ( failed_test.getAge().toInteger() > 1 ) { %>
           <td class="test test-failed" colspan="6">
            NOTE: The above test is contiously failing!!
          </td>
