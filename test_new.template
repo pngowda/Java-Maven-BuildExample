@@ -248,8 +248,7 @@
           <td class="test test-failed" colspan="6">
            NOTE: The above test is contiously failing!!
          </td>
-           //<tr><h5>NOTE: The above test is contiously failing!!</h5></tr>
-  <% } %>
+    <% } %>
         <% } %>
 	<% }
 
