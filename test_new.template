@@ -246,7 +246,7 @@
     </tr>
     <% if ( failed_test.getAge().toInteger() > 1 ) { %>
           <td class="test test-failed" colspan="6">
-           NOTE: The above test is contiously failing!!
+           NOTE: The above test is continuously failing!!
          </td>
     <% } %>
         <% } %>
