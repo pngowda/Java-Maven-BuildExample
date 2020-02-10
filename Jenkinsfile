@@ -9,12 +9,12 @@ pipeline {
         }
         stage('Build') {
             steps {
-                bat 'mvn -B -DskipTests clean package'
+                sh 'mvn -B -DskipTests clean package'
             }
         }
         stage('Test') {
             steps {
-                bat 'mvn -Dmaven.test.failure.ignore=false test'
+                sh 'mvn -Dmaven.test.failure.ignore=false test'
 		//currentBuild.result = 'UNSTABLE'
             }
             post {
