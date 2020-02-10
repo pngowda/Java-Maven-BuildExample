@@ -1,4 +1,4 @@
-@Library('test-library@master') _
+
 pipeline {
     agent any
     stages {
@@ -36,13 +36,13 @@ notifyemail(){
           //                       [$class: 'DevelopersRecipientProvider'],
           //                       [$class: 'RequesterRecipientProvider']])
 	//println "${mailRecipients}"
-          def mailRecipients = "external.Prajwal.Gowda@de.bosch.com"
+          def mailRecipients = "prajwaln22@gmail.com"
           def jobName = currentBuild.fullDisplayName
           emailext attachLog: true,
 		   body: '''${SCRIPT, template="test_new.template"}''',
                    mimeType: 'text/html',
                    subject: "[Jenkins] ${jobName}",
-                   to: "${mailRecipients}, external.Prajwal.Gowda@de.bosch.com"
+                   to: "${mailRecipients}, prajwaln22@gmail.com"
                    replyTo: "${mailRecipients}"
                    recipientProviders: [[$class: 'CulpritsRecipientProvider']]
 		
