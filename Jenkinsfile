@@ -39,7 +39,7 @@ notifyemail(){
           def mailRecipients = "prajwaln22@gmail.com"
           def jobName = currentBuild.fullDisplayName
           emailext attachLog: true,
-		   body: '''${SCRIPT, template="test_new.template"}''',
+		   body: '''${SCRIPT, template="test_html.template"}''',
                    mimeType: 'text/html',
                    subject: "[Jenkins] ${jobName}",
                    to: "${mailRecipients}, prajwaln22@gmail.com"
